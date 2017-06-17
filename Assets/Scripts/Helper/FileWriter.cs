@@ -27,7 +27,6 @@ public static class FileWriter
     {
         string path = Path.Combine(Application.dataPath, fileName);
         File.WriteAllText(path, text);
-        Debug.Log("Succ");
     }
 
     public static void Write(string fileName, object obj)

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Newtonsoft.Json;
-
+using Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +33,8 @@ public class RDFieldEditor : EditorWindow
 
     bool _showDimensions = true;
     bool _showExitConditions = true;
+    bool _showObject = true;
+
     bool _showMobs = true;
 
     protected GUIStyle _selectionButtonStyle;
@@ -93,8 +95,6 @@ public class RDFieldEditor : EditorWindow
 
                 GUILayout.BeginVertical("Box", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
                 {
-
-                    DrawFilters();
                     DrawList();
                 }
                 GUILayout.EndVertical();
@@ -122,22 +122,6 @@ public class RDFieldEditor : EditorWindow
         }
         GUILayout.EndArea();
     }
-
-    #region Filters
-
-
-    private void DrawFilters()
-    { }
-
-
-    private void ApplyFieldFilter()
-    {
-
-        if (String.IsNullOrEmpty(_selectedFieldName))
-            return;
-    }
-
-    #endregion
 
     #region List of fields 
 
@@ -199,8 +183,9 @@ public class RDFieldEditor : EditorWindow
         var cont = new FieldContainer(field)
         {
             Saved = true,
+            currentItem = 6,
+            currentMob = 3
         };
-
         _conts.Insert(0, cont);
     }
 
@@ -352,6 +337,65 @@ public class RDFieldEditor : EditorWindow
                         }
                         GUILayout.EndHorizontal();
 
+                        GUILayout.Space(3);
+                    }
+                    GUILayout.EndVertical();
+                }
+
+            }
+            GUILayout.EndVertical();
+
+            #endregion
+            #region Объекты
+
+            GUILayout.Space(4);
+            GUILayout.BeginVertical("Box");
+            {
+
+                GUILayout.BeginHorizontal(EditorStyles.toolbar);
+                {
+
+                    EditorGUILayout.LabelField("Колличество объектов", EditorStyles.boldLabel, GUILayout.ExpandWidth(true));
+
+                    if (_showObject)
+                    {
+
+                        if (GUILayout.Button("Свернуть", EditorStyles.toolbarButton, GUILayout.Width(75)))
+                        {
+                            _showObject = false;
+                        }
+                    }
+
+                    if (!_showObject)
+                    {
+                        if (GUILayout.Button("Развернуть", EditorStyles.toolbarButton, GUILayout.Width(75)))
+                        {
+                            _showObject = true;
+                        }
+                    }
+                }
+                GUILayout.EndHorizontal();
+
+                if (_showObject)
+                {
+
+                    GUILayout.BeginVertical("Box");
+                    {
+                       
+                            GUILayout.BeginHorizontal();
+                            {
+
+                                EditorGUILayout.LabelField("Колличество мобов", GUILayout.Width(150));
+                                cont.Field._enterPosition.X = EditorGUILayout.IntField(cont.Field._enterPosition.X, GUILayout.ExpandWidth(true));
+
+                                EditorGUILayout.LabelField("Колличество препятсвий", GUILayout.Width(150));
+                                cont.Field._enterPosition.Y = EditorGUILayout.IntField(cont.Field._enterPosition.Y, GUILayout.ExpandWidth(true));
+
+                            }
+                            GUILayout.EndHorizontal();
+                        
+
+                  
                         GUILayout.Space(3);
                     }
                     GUILayout.EndVertical();

@@ -1,1 +1,1 @@
-[{"Saved":false,"Field":{"enterPosition":{"x":0,"y":0},"height":9,"width":9,"mobsAmountMin":0,"mobsAmountMax":0,"RandomEnterPosition":true,"exitPosition":{"x":1,"y":2},"needKillMobs":true,"Id":1,"Weight":0,"name":"Level","desc":null}}]
+[{"Saved":true,"currentMob":3,"currentItem":6,"Field":{"enterPosition":{"x":3,"y":6},"height":9,"width":5,"mobsAmountMin":0,"mobsAmountMax":0,"RandomEnterPosition":true,"exitPosition":null,"needKillMobs":false,"Id":1,"Weight":0,"name":"Level","desc":null}}]
