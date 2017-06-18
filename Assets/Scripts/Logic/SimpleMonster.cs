@@ -7,12 +7,13 @@ public class SimpleMonster : Unit,  SerchPlayer
     private Vector2 posMob;
     private int currentSteps = 1;
 
+
     private List<Cell> cellsNoClose = new List<Cell>();
     private List<Cell> cells = new List<Cell>();
 
-    public void Init(int damage, int hp, Vector2 pos) 
+    public void Init(int damage, int hp, Vector2 pos, Animator anim) 
     {
-        base.Init(damage, hp, pos);
+        base.Init(damage, hp, pos, anim);
         posMob = pos;
     }
 
@@ -62,10 +63,8 @@ public class SimpleMonster : Unit,  SerchPlayer
             {
                 GameController.instanse.GetCells().Find(v => v.pos == new Vector2(posMob.x, posMob.y)).SetClose(false);
                 Cell cell = cellsNoClose[Random.Range(0, cellsNoClose.Count)];
-                cell.SetClose(true);
                 posMob = cell.pos;
-                gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
-                base.ChangePos(posMob);
+                base.Walk(cell, posMob);
                 Atack();
             }
         }

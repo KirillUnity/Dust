@@ -101,7 +101,8 @@ public class FieldGenerator : MonoBehaviour {
         Transform player = Instantiate(plaierPrefab, cell.gameObject.transform.position + Vector3.up / 4, Quaternion.Euler(Vector3.right)) as Transform;
         player.gameObject.AddComponent<Player>();
         Player unit = player.gameObject.GetComponent<Player>();
-        unit.Init(20, 20, cell.pos);
+        unit.Init(20, 20, cell.pos, player.GetComponent<Animator>());
+        GameController.instanse.AddPlayer(unit);
     }
 
     private void GenerateMob()
@@ -115,7 +116,7 @@ public class FieldGenerator : MonoBehaviour {
             Transform mob = Instantiate(mobPrefab, cell.gameObject.transform.position+Vector3.up/4, Quaternion.Euler(Vector3.right)) as Transform;
             mob.gameObject.AddComponent<SimpleMonster>();
             SimpleMonster unit = mob.gameObject.GetComponent<SimpleMonster>();
-            unit.Init(10, 20, mobPos[i]);
+            unit.Init(10, 20, mobPos[i], mob.GetComponent<Animator>());
             units[i] = unit;
         }
 
@@ -131,10 +132,11 @@ public class FieldGenerator : MonoBehaviour {
             Cell cell = getClearCeil();
             itemPos[i] = cell.pos;
             Transform[] itemPrefab = Resources.LoadAll<Transform>("Prefabs/Items");
-            Transform item = Instantiate(itemPrefab[UnityEngine.Random.Range(0, itemPrefab.Length)], cell.gameObject.transform.position, Quaternion.Euler(Vector3.right)) as Transform;
-          //  mob.gameObject.AddComponent<SimpleMonster>();
-            //SimpleMonster unit = mob.gameObject.GetComponent<SimpleMonster>();
-         //   unit.Init(10, 20, itemPos[i]);
+            Transform item = Instantiate(
+                itemPrefab[UnityEngine.Random.Range(0, itemPrefab.Length)], 
+                cell.gameObject.transform.position,
+                Quaternion.Euler(Vector3.right)
+                ) as Transform;
         }
 
     }

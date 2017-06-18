@@ -14,8 +14,8 @@ public class Player : Unit, MovePlaer
     }
 
     // Use this for initialization
-    public void Init (int damage, int hp, Vector2 position ) {
-        base.Init(damage, hp, position);
+    public void Init (int damage, int hp, Vector2 position, Animator anim) {
+        base.Init(damage, hp, position, anim);
         pos = position;
         GameController.instanse.AddPlayer(this);
     }

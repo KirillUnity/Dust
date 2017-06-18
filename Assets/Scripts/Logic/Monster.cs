@@ -8,9 +8,11 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
     private int hp;
     private Vector2 pos;
     private UnitType type;
+    private Animator anim;
 
-    public void Init(int damage, int hp, Vector2 pos, UnitType type = UnitType.SimpleMob)
+    public void Init(int damage, int hp, Vector2 pos, Animator anim, UnitType type = UnitType.SimpleMob)
     {
+        this.anim = anim;
         this.damage = damage;
         this.hp = hp;
         this.pos = pos;
@@ -22,8 +24,11 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
         return type;
     }
 
-    public void ChangePos(Vector2 pos)
+    public void Walk(Cell cell, Vector2 pos)
     {
+      //  anim.SetFloat("Blend", 0.5f);
+        cell.SetClose(true);
+        gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
         this.pos = pos;
     }
 
@@ -75,5 +80,6 @@ public enum UnitType
     SimpleMob,
     Archer,
     Wizard,
-    Warrior
+    Warrior,
+    Player
 }
