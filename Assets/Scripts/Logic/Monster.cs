@@ -24,21 +24,35 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
         return type;
     }
 
-    public void Walk(Cell cell, Vector2 pos)
+    public void Walk(Cell cell, Vector2 pos, bool close = true)
     {
-      //  anim.SetFloat("Blend", 0.5f);
-        cell.SetClose(true);
+        Debug.Log(anim.ToString());
+        anim.SetFloat("Blend", 0.5f);
+        cell.SetClose(close);
         gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
         this.pos = pos;
+        StartCoroutine(IdelAnim());
+    }
+    IEnumerator IdelAnim(bool die=false)
+    {
+        yield return new WaitForSeconds(0.5f);
+       
+        if(die)
+            gameObject.SetActive(false);
+        else
+            anim.SetFloat("Blend", 1f);
+
     }
 
     public void Atack(Unit unit)
     {
+        anim.SetFloat("Blend", 0.25f);
+        StartCoroutine(IdelAnim());
         unit.hp -= damage;
-        Debug.Log("Unit HP: " + unit.hp);
 
         if (unit.hp <= 0)
         {
+            unit.anim.SetFloat("Blend", 0.75f);
             DeathUnit death = unit as DeathUnit;
             death.Death();
             try
@@ -51,16 +65,26 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
                 GameController.instanse.GetCells().Find(v => v.pos == unit.pos).SetClose(false);
                 GameController.instanse.removeUnit(unit);
             }
+
+        }else
+        {
+          //  unit.anim.SetFloat("Blend", 0);
+            unit.Defense();
         }
+
     }
 
     public void Death()
     {
-        gameObject.SetActive(false);
+        anim.SetFloat("Blend", 0.75f);
+        StartCoroutine(IdelAnim(true));
+        //   gameObject.SetActive(false);
     }
 
     public void Defense()
     {
+        anim.SetFloat("Blend", 0);
+        StartCoroutine(IdelAnim());
     }
 
 }

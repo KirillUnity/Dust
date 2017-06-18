@@ -52,7 +52,8 @@ public class Player : Unit, MovePlaer
             }
 
             pos = cell.pos;
-            gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
+            base.Walk(cell, pos, false);
+            //gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
 
         }
 
