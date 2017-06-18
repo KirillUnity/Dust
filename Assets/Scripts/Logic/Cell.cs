@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class Cell : MonoBehaviour {
 
-    [SerializeField]
     public Vector2 pos;
 
     [SerializeField]

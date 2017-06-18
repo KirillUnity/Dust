@@ -392,9 +392,9 @@
     <Compile Include="Assets\Scripts\Logic\Cell.cs" />
     <Compile Include="Assets\Scripts\Logic\FieldGenerator.cs" />
     <Compile Include="Assets\Scripts\Logic\GameController.cs" />
-    <Compile Include="Assets\Scripts\Logic\Monster.cs" />
-    <Compile Include="Assets\Scripts\Logic\Player.cs" />
-    <Compile Include="Assets\Scripts\Logic\SimpleMonster.cs" />
+    <Compile Include="Assets\Scripts\Logic\Unit\BaseUnit.cs" />
+    <Compile Include="Assets\Scripts\Logic\Unit\Player.cs" />
+    <Compile Include="Assets\Scripts\Logic\Unit\SimpleMonster.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonController.cs" />
   </ItemGroup>
   <ItemGroup>

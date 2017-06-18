@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 public class SimpleMonster : Unit,  SerchPlayer
 {
-    [SerializeField]
-    private Vector2 posMob;
+  
     private int currentSteps = 1;
-
 
     private List<Cell> cellsNoClose = new List<Cell>();
     private List<Cell> cells = new List<Cell>();
@@ -14,17 +12,18 @@ public class SimpleMonster : Unit,  SerchPlayer
     public void Init(int damage, int hp, Vector2 pos, Animator anim) 
     {
         base.Init(damage, hp, pos, anim);
-        posMob = pos;
+       
     }
 
     public Vector2 GetPos()
     {
-        return posMob;
+        return base.GetPos();
     }
 
 
     public bool Atack()
     {
+        Vector2 posMob = GetPos();
         bool atack = false;
         Player player = GameController.instanse.player;
         cells = new List<Cell>() {
@@ -61,10 +60,10 @@ public class SimpleMonster : Unit,  SerchPlayer
         {
             if (!atack && cellsNoClose.Count > 0)
             {
+                Vector2 posMob = GetPos();
                 GameController.instanse.GetCells().Find(v => v.pos == new Vector2(posMob.x, posMob.y)).SetClose(false);
                 Cell cell = cellsNoClose[Random.Range(0, cellsNoClose.Count)];
-                posMob = cell.pos;
-                base.Walk(cell, posMob);
+                base.Walk(cell, cell.pos);
                 Atack();
             }
         }

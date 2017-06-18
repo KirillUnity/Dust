@@ -258,10 +258,8 @@ public class RDFieldEditor : EditorWindow
                         {
                             EditorGUILayout.LabelField("Ширина поля", GUILayout.Width(150));
                             cont.Field.Width = EditorGUILayout.IntField(cont.Field.Width, GUILayout.ExpandWidth(true));
-                            //  cont.Field.GameBoardSize.X= EditorGUILayout.IntField(cont.Field.GameBoardSize.X, GUILayout.ExpandWidth(true));
                             EditorGUILayout.LabelField("Высота поля", GUILayout.Width(150));
                             cont.Field.Height = EditorGUILayout.IntField(cont.Field.Height, GUILayout.ExpandWidth(true));
-                            //  cont.Field.GameBoardSize.Y= EditorGUILayout.IntField(cont.Field.GameBoardSize.Y, GUILayout.ExpandWidth(true));
                         }
                         GUILayout.EndHorizontal();
 
@@ -409,7 +407,7 @@ public class RDFieldEditor : EditorWindow
         }
         GUILayout.EndScrollView();
     }
-    //Кнопка сохранить, Удалить
+
     private void DrawGeneralFieldProperties(FieldContainer cont)
     {
         GUILayout.BeginHorizontal();
@@ -489,7 +487,6 @@ public class RDFieldEditor : EditorWindow
 
     void FieldProgressBar(float value, string label)
     {
-        // Get a rect for the progress bar using the same margins as a textfield:
         Rect rect = GUILayoutUtility.GetRect(400, 18, "TextField");
         EditorGUI.ProgressBar(rect, value, label);
     }

@@ -6,19 +6,22 @@ using Newtonsoft.Json;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
+
+    public static GameController instanse;
+
     private MovePlaer move;
+    public Player player;
+
     private Vector3 touchPosition;
     [SerializeField]
     private Text lifeCount;
-    private float dragDistance;  
 
-    public static GameController instanse;
-    public Player player;
     private List<Unit> units = new List<Unit>();
-    List<Cell> AllCells = new List<Cell>();
+    private List<Cell> AllCells = new List<Cell>();
+
     [SerializeField]
     private long level = 1;
-
+    private float dragDistance;
     public int unitCount;
     public int itemCount;
 

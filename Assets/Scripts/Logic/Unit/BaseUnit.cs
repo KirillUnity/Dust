@@ -24,6 +24,11 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
         return type;
     }
 
+    public Vector2 GetPos()
+    {
+        return pos;
+    }
+
     public void Walk(Cell cell, Vector2 pos, bool close = true)
     {
         Debug.Log(anim.ToString());

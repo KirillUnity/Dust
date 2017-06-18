@@ -76,42 +76,6 @@ public class DataField : DataObject
             this.X = x;
             this.Y = y;
         }
-
-        public IntPos()
-        {
-            this.X = 0;
-            this.Y = 0;
-        }
-
-        public IntPos(IntPos old)
-        {
-            this.X = old.X;
-            this.Y = old.Y;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("[{0}, {1}]", this.X, this.Y);
-        }
-
-        public static IntPos operator +(IntPos firts, IntPos second)
-        {
-            return new IntPos()
-            {
-                X = firts.X + second.X,
-                Y = second.Y + second.Y
-            };
-        }
-
-        public override bool Equals(object o)
-        {
-            return o.ToString() == this.ToString();
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
     }
 }
  
