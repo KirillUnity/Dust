@@ -13,9 +13,9 @@ public class Cell : MonoBehaviour {
     private GameObject border;
 
     public Sprite[] tileSprites;
-    public bool isClose;
+    private bool isClose;
+    private bool isExit;
 
-   
     public void Init(int x, int y, GameObject prefab = null, int cornerPos = 0, bool border = false)
     { 
         this.prefab = prefab;
@@ -26,8 +26,29 @@ public class Cell : MonoBehaviour {
         if(border)
             DrawCorner(cornerPos, border);
 
-        GameController.instanse.AddCellToDictionary(new Vector2(x, y), this);
+        GameController.instanse.AddCells(this);
 
+    }
+
+
+    public void SetClose(bool close)
+    {
+        isClose = close;
+    }
+
+    public bool GetClose()
+    {
+        return isClose;
+    }
+
+    public void SetExit()
+    {
+        isExit = true;
+    }
+
+    public bool GetExit()
+    {
+        return isExit;
     }
 
     private void DrawCorner(int corner)

@@ -33,15 +33,24 @@ public class FieldGenerator : MonoBehaviour {
     private void GenerateMap()
     {
         GenerateCell();
+        GenerateExit();
         GenerateMob();
         GeneratePlayer();
-        GenerateExit();
         GenerateItem();
     }
 
     public void GenerateExit()
     {
-        Cell cell = getClearCeil();
+        Cell cell = new Cell();
+
+        if (GameController.instanse.conteiner.Field.RandomEnterPosition)
+            cell = getClearCeil(false);
+        else {
+            Vector2 exitPos = new Vector2(GameController.instanse.conteiner.Field.EnterPosition.X, GameController.instanse.conteiner.Field.EnterPosition.Y);
+            cell = GameController.instanse.GetCells().Find(c => c.pos == exitPos);
+        }
+
+        cell.SetExit();
         Transform exit = Instantiate(exitPrefab, cell.gameObject.transform.position, Quaternion.Euler(Vector3.right)) as Transform;
     }
 
@@ -82,16 +91,15 @@ public class FieldGenerator : MonoBehaviour {
                     cell.Init(x, y);
                     cells.Add(cell);
                 }
-
             }
 
         }
     }
+
     private void GeneratePlayer()
     {
-        Cell cell = getClearCeil();
+        Cell cell = getClearCeil(false);
         Transform player = Instantiate(plaierPrefab, cell.gameObject.transform.position + Vector3.up / 4, Quaternion.Euler(Vector3.right)) as Transform;
-
         player.gameObject.AddComponent<Player>();
         Player unit = player.gameObject.GetComponent<Player>();
         unit.Init(10, 20, cell.pos);
@@ -100,7 +108,7 @@ public class FieldGenerator : MonoBehaviour {
     private void GenerateMob()
     {
         Vector2[] mobPos = new Vector2[GameController.instanse.conteiner.currentMob];
-
+        Unit[] units = new Unit[mobPos.Length];
         for (int i = 0; i < mobPos.Length; i++)
         {
             Cell cell = getClearCeil();
@@ -109,7 +117,10 @@ public class FieldGenerator : MonoBehaviour {
             mob.gameObject.AddComponent<SimpleMonster>();
             SimpleMonster unit = mob.gameObject.GetComponent<SimpleMonster>();
             unit.Init(10, 20, mobPos[i]);
+            units[i] = unit;
         }
+
+        GameController.instanse.AddUnits(units);
 
     }
     private void GenerateItem()
@@ -129,10 +140,10 @@ public class FieldGenerator : MonoBehaviour {
 
     }
 
-    private Cell getClearCeil()
+    private Cell getClearCeil(bool close = true)
     {
         Cell cell = cells[UnityEngine.Random.Range(1, cells.Count)];
-        cell.isClose = true;
+        cell.SetClose(close);
         cells.Remove(cell);
         return cell;
     }
