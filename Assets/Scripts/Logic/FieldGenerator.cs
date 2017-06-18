@@ -49,7 +49,7 @@ public class FieldGenerator : MonoBehaviour {
             Vector2 exitPos = new Vector2(GameController.instanse.conteiner.Field.EnterPosition.X, GameController.instanse.conteiner.Field.EnterPosition.Y);
             cell = GameController.instanse.GetCells().Find(c => c.pos == exitPos);
         }
-
+        cells.Remove(cell);
         cell.SetExit();
         Transform exit = Instantiate(exitPrefab, cell.gameObject.transform.position, Quaternion.Euler(Vector3.right)) as Transform;
     }
@@ -101,7 +101,8 @@ public class FieldGenerator : MonoBehaviour {
         Transform player = Instantiate(plaierPrefab, cell.gameObject.transform.position + Vector3.up / 4, Quaternion.Euler(Vector3.right)) as Transform;
         player.gameObject.AddComponent<Player>();
         Player unit = player.gameObject.GetComponent<Player>();
-        unit.Init(20, 20, cell.pos, player.GetComponent<Animator>());
+        GameController.instanse.SetLifeText(100);
+        unit.Init(10, 100, cell.pos, player.GetComponent<Animator>());
         GameController.instanse.AddPlayer(unit);
     }
 
@@ -116,7 +117,7 @@ public class FieldGenerator : MonoBehaviour {
             Transform mob = Instantiate(mobPrefab, cell.gameObject.transform.position+Vector3.up/4, Quaternion.Euler(Vector3.right)) as Transform;
             mob.gameObject.AddComponent<SimpleMonster>();
             SimpleMonster unit = mob.gameObject.GetComponent<SimpleMonster>();
-            unit.Init(10, 20, mobPos[i], mob.GetComponent<Animator>());
+            unit.Init(20, 20, mobPos[i], mob.GetComponent<Animator>());
             units[i] = unit;
         }
 

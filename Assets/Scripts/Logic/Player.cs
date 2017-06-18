@@ -15,7 +15,7 @@ public class Player : Unit, MovePlaer
 
     // Use this for initialization
     public void Init (int damage, int hp, Vector2 position, Animator anim) {
-        base.Init(damage, hp, position, anim);
+        base.Init(damage, hp, position, anim, UnitType.Player);
         pos = position;
         GameController.instanse.AddPlayer(this);
     }
@@ -48,6 +48,7 @@ public class Player : Unit, MovePlaer
             GameController.instanse.playerCanGo = false;
             if (cell.GetExit())
             {
+                GameController.Win();
                 Debug.Log("Win");
             }
 
@@ -69,6 +70,7 @@ public class Player : Unit, MovePlaer
 
                         if (cell == GameController.instanse.GetCells().Find(v => v.pos == monster.GetPos()))
                         {
+                            GameController.instanse.playerCanGo = false;
                             Atack(unit);
                         }
 

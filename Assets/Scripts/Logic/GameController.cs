@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using Data;
 using Newtonsoft.Json;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     private MovePlaer move;
-    private Vector3 touchPosition; 
-
+    private Vector3 touchPosition;
+    [SerializeField]
+    private Text lifeCount;
     private float dragDistance;  
 
     public static GameController instanse;
@@ -65,6 +67,22 @@ public class GameController : MonoBehaviour {
     {
         this.player = plaer;
         move = plaer;
+    }
+
+    public void SetLifeText(int text)
+    {
+        lifeCount.text = text + "";
+    }
+
+    public static void GameOver()
+    {
+        Application.LoadLevel(2);
+    }
+
+    public static void Win()
+    {
+        Application.LoadLevel(3);
+
     }
 
     void Update()

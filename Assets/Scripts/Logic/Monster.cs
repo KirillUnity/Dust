@@ -36,9 +36,15 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
     IEnumerator IdelAnim(bool die=false)
     {
         yield return new WaitForSeconds(0.5f);
-       
-        if(die)
+
+        if (die)
+        {
             gameObject.SetActive(false);
+            if (type == UnitType.Player)
+            {
+                GameController.GameOver();
+            }
+        }
         else
             anim.SetFloat("Blend", 1f);
 
@@ -50,6 +56,8 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
         StartCoroutine(IdelAnim());
         unit.hp -= damage;
 
+      //  
+
         if (unit.hp <= 0)
         {
             unit.anim.SetFloat("Blend", 0.75f);
@@ -59,6 +67,8 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
             {
                 MovePlaer move = (Player)unit;
                 Debug.Log("GameOver");
+                GameController.instanse.SetLifeText(0);
+
             }
             catch
             {
@@ -83,6 +93,9 @@ public abstract class Unit : MonoBehaviour, DeathUnit {
 
     public void Defense()
     {
+        if(type==UnitType.Player)
+            GameController.instanse.SetLifeText(hp);
+
         anim.SetFloat("Blend", 0);
         StartCoroutine(IdelAnim());
     }
