@@ -4,14 +4,13 @@ using System;
 
 public class Player : Unit, MovePlaer
 {
-    [SerializeField]
     public Vector2 pos;
 
     private int currentSteps = 1;
 
-    public void Atack()
+    public void Atack(Unit unit)
     {
-        throw new NotImplementedException();
+        base.Atack(unit);
     }
 
     // Use this for initialization
@@ -28,25 +27,25 @@ public class Player : Unit, MovePlaer
         switch (Type)
         {
             case SwipeDirection.Up:
-                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x, pos.y + currentSteps));
-                break;
-
-            case SwipeDirection.Down:
                 cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x, pos.y - currentSteps));
                 break;
 
+            case SwipeDirection.Down:
+                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x, pos.y + currentSteps));
+                break;
+
             case SwipeDirection.Left:
-                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x - currentSteps, pos.y ));
+                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x + currentSteps, pos.y ));
                 break;
 
             case SwipeDirection.Rihgt:
-                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x + currentSteps, pos.y ));
+                cell = GameController.instanse.GetCells().Find(v => v.pos == new Vector2(pos.x - currentSteps, pos.y ));
                 break;
         }
 
         if (cell != null && !cell.GetClose())
         {
-            GameController.instanse.
+            GameController.instanse.playerCanGo = false;
             if (cell.GetExit())
             {
                 Debug.Log("Win");
@@ -56,13 +55,33 @@ public class Player : Unit, MovePlaer
             gameObject.transform.position = cell.gameObject.transform.position + Vector3.up / 4;
 
         }
+
+        else if (cell != null)
+        {try
+            {
+                foreach (Unit unit in GameController.instanse.GetUnits())
+                {
+                    if (unit.GetType() == UnitType.SimpleMob)
+                    {
+
+                        SimpleMonster monster = (SimpleMonster)unit;
+
+                        if (cell == GameController.instanse.GetCells().Find(v => v.pos == monster.GetPos()))
+                        {
+                            Atack(unit);
+                        }
+
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }
 
 interface MovePlaer
 {
     void Move(SwipeDirection Type);
-    void Atack();
 }
 
 public enum SwipeDirection{

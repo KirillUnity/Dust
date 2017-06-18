@@ -11,14 +11,16 @@ public class GameController : MonoBehaviour {
     private float dragDistance;  
 
     public static GameController instanse;
-    private Player plaer;
-    private Unit[] units;
+    public Player player;
+    private List<Unit> units = new List<Unit>();
     List<Cell> AllCells = new List<Cell>();
     [SerializeField]
     private long level = 1;
 
     public int unitCount;
     public int itemCount;
+
+    public bool playerCanGo = true;
 
     public FieldContainer conteiner;
     private String path = "Resources/Json/level.json";
@@ -46,97 +48,76 @@ public class GameController : MonoBehaviour {
 
     public void AddUnits(Unit[] units)
     {
-       this.units = units;
+       this.units.AddRange(units);
+    }
+
+    public List<Unit> GetUnits()
+    {
+       return units;
+    }
+
+    public void removeUnit(Unit unit)
+    {
+         units.Remove(unit);
     }
 
     public void AddPlayer(Player plaer)
     {
-        this.plaer = plaer;
+        this.player = plaer;
         move = plaer;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (playerCanGo)
         {
-            touchPosition = Input.mousePosition;
-        }
+            if (Input.GetMouseButtonDown(0))
+                touchPosition = Input.mousePosition;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            Vector2 swipe = touchPosition - Input.mousePosition;
 
-            if (Mathf.Abs(swipe.x) > dragDistance)
+            if (Input.GetMouseButtonUp(0))
             {
-                if (swipe.x > 0)
-                    move.Move(SwipeDirection.Left);
-                else
-                    move.Move(SwipeDirection.Rihgt);
+                Vector2 swipe = touchPosition - Input.mousePosition;
+
+                if (Mathf.Abs(swipe.x) > dragDistance)
+                {
+                    if (swipe.x > 0)
+                        move.Move(SwipeDirection.Rihgt);
+                    else
+                        move.Move(SwipeDirection.Left);
+                }
+
+                if (Mathf.Abs(swipe.y) > dragDistance)
+                {
+                    if (swipe.y > 0)
+                        move.Move(SwipeDirection.Up);
+                    else
+                        move.Move(SwipeDirection.Down);
+                }
             }
-          
-            if (Mathf.Abs(swipe.y) > dragDistance)
+
+        } else {
+            try
             {
-                if (swipe.y > 0)
-                    move.Move(SwipeDirection.Down);
-                else
-                    move.Move(SwipeDirection.Up);
+                for (int i = 0; i < units.Count; i++)
+                {
+
+                    switch (units[i].GetType())
+                    {
+                        case UnitType.SimpleMob:
+                            SerchPlayer serch = (SimpleMonster)units[i];
+                            serch.Serch();
+                            break;
+
+                        default:
+
+                            break;
+                    }
+
+                }
+                playerCanGo = true;
             }
+            catch {}
         }
-
-
-        //foreach (Touch touch in Input.touches)  //используем цикл для отслеживания больше одного свайпа
-        //{ //должны быть закоментированы, если вы используете списки 
-        //  /*if (touch.phase == TouchPhase.Began) //проверяем первое касание
-        //  {
-        //      fp = touch.position;
-        //      lp = touch.position;
-
-        //  }*/
-
-        //    if (touch.phase == TouchPhase.Moved) //добавляем касания в список, как только они определены
-        //    {
-        //        touchPositions.Add(touch.position);
-        //    }
-
-        //    if (touch.phase == TouchPhase.Ended) //проверяем, если палец убирается с экрана
-        //    {
-        //        //lp = touch.position;  //последняя позиция касания. закоментируйте если используете списки
-        //        fp = touchPositions[0]; //получаем первую позицию касания из списка касаний
-        //        lp = touchPositions[touchPositions.Count - 1]; //позиция последнего касания
-
-        //        //проверяем дистанцию перемещения больше чем 20% высоты экрана
-        //        if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
-        //        {//это перемещение
-        //         //проверяем, перемещение было вертикальным или горизонтальным 
-        //            if (Mathf.Abs(lp.x - fp.x) > Mathf.Abs(lp.y - fp.y))
-        //            {   //Если горизонтальное движение больше, чем вертикальное движение ...
-        //                if ((lp.x > fp.x))  //Если движение было вправо
-        //                {   //Свайп вправо
-        //                    Debug.Log("Right Swipe");
-        //                }
-        //                else
-        //                {   //Свайп влево
-        //                    Debug.Log("Left Swipe");
-        //                }
-        //            }
-        //            else
-        //            {   //Если вертикальное движение больше, чнм горизонтальное движение
-        //                if (lp.y > fp.y)  //Если движение вверх
-        //                {   //Свайп вверх
-              
-        //                    //     Debug.Log("Up Swipe");
-        //                }
-        //                else
-        //                {   //Свайп вниз
-        //                    Debug.Log("Down Swipe");
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {   //Это ответвление, как расстояние перемещения составляет менее 20% от высоты экрана
-
-        //    }
-        //}
     }
 }

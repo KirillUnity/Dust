@@ -92,7 +92,6 @@ public class FieldGenerator : MonoBehaviour {
                     cells.Add(cell);
                 }
             }
-
         }
     }
 
@@ -102,7 +101,7 @@ public class FieldGenerator : MonoBehaviour {
         Transform player = Instantiate(plaierPrefab, cell.gameObject.transform.position + Vector3.up / 4, Quaternion.Euler(Vector3.right)) as Transform;
         player.gameObject.AddComponent<Player>();
         Player unit = player.gameObject.GetComponent<Player>();
-        unit.Init(10, 20, cell.pos);
+        unit.Init(20, 20, cell.pos);
     }
 
     private void GenerateMob()
