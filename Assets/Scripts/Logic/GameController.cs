@@ -26,19 +26,18 @@ public class GameController : MonoBehaviour {
     public int itemCount;
 
     public bool playerCanGo = true;
-
     public FieldContainer conteiner;
     private String path = "Resources/Json/level.json";
 
     void Awake () {
         instanse = this;
-        var fields = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path));
-        conteiner = fields.Find(m => m.Field.Id == level);
+        //var fields = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path));
+        //conteiner = fields.Find(m => m.Field.Id == level);
 
-        itemCount = conteiner.currentItem;
-        unitCount = conteiner.currentItem;
+        //itemCount = conteiner.currentItem;
+        //unitCount = conteiner.currentItem;
 
-        dragDistance = Screen.height * 10 / 100; //10% высоты экрана
+        dragDistance = Screen.height * 20 / 100; //10% высоты экрана
     }
 
     public void AddCells(Cell  cell)
@@ -92,11 +91,12 @@ public class GameController : MonoBehaviour {
     {
         if (playerCanGo)
         {
-            if (Input.GetMouseButtonDown(0))
+            
+            if (Input.GetKeyDown(KeyCode.Mouse0))
                 touchPosition = Input.mousePosition;
 
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 Vector2 swipe = touchPosition - Input.mousePosition;
 
@@ -108,7 +108,7 @@ public class GameController : MonoBehaviour {
                         move.Move(SwipeDirection.Left);
                 }
 
-                if (Mathf.Abs(swipe.y) > dragDistance)
+               else if (Mathf.Abs(swipe.y) > dragDistance)
                 {
                     if (swipe.y > 0)
                         move.Move(SwipeDirection.Up);
