@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     public static GameController instanse;
-
+   
     private MovePlaer move;
     public Player player;
 
@@ -22,22 +22,17 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private long level = 1;
     private float dragDistance;
-    public int unitCount;
-    public int itemCount;
 
     public bool playerCanGo = true;
 
-    public FieldContainer conteiner;
     private String path = "Resources/Json/level.json";
+
+    public int unitCount = 3;
+    public int itemCount = 5;
+
 
     void Awake () {
         instanse = this;
-        var fields = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path));
-        conteiner = fields.Find(m => m.Field.Id == level);
-
-        itemCount = conteiner.currentItem;
-        unitCount = conteiner.currentItem;
-
         dragDistance = Screen.height * 10 / 100; //10% высоты экрана
     }
 
@@ -108,7 +103,7 @@ public class GameController : MonoBehaviour {
                         move.Move(SwipeDirection.Left);
                 }
 
-                if (Mathf.Abs(swipe.y) > dragDistance)
+                else if (Mathf.Abs(swipe.y) > dragDistance)
                 {
                     if (swipe.y > 0)
                         move.Move(SwipeDirection.Up);

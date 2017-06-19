@@ -10,22 +10,17 @@ public class FieldGenerator : MonoBehaviour {
     public Transform exitPrefab;
 
     [SerializeField]
-    public Vector2 size;
+    private Vector2 size = new Vector3(9,9);
 
     public Unit unit;
     List<Cell> cells = new List<Cell>();
 
     // Use this for initialization
     void Start () {
-        size.y = GameController.instanse.conteiner.Field.Height;
-        size.x = GameController.instanse.conteiner.Field.Width;
+
         GenerateMap();
     }
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
 
     [Range(0, 1)]
     public float outlinePercent;
@@ -42,14 +37,7 @@ public class FieldGenerator : MonoBehaviour {
     public void GenerateExit()
     {
         Cell cell = new Cell();
-
-        if (GameController.instanse.conteiner.Field.RandomEnterPosition)
-            cell = getClearCeil(false);
-        else {
-            Vector2 exitPos = new Vector2(GameController.instanse.conteiner.Field.EnterPosition.X, GameController.instanse.conteiner.Field.EnterPosition.Y);
-            cell = GameController.instanse.GetCells().Find(c => c.pos == exitPos);
-        }
-        cells.Remove(cell);
+        cell = getClearCeil(false);
         cell.SetExit();
         Transform exit = Instantiate(exitPrefab, cell.gameObject.transform.position, Quaternion.Euler(Vector3.right)) as Transform;
     }
@@ -108,7 +96,7 @@ public class FieldGenerator : MonoBehaviour {
 
     private void GenerateMob()
     {
-        Vector2[] mobPos = new Vector2[GameController.instanse.conteiner.currentMob];
+        Vector2[] mobPos = new Vector2[GameController.instanse.unitCount];
         Unit[] units = new Unit[mobPos.Length];
         for (int i = 0; i < mobPos.Length; i++)
         {
@@ -126,7 +114,7 @@ public class FieldGenerator : MonoBehaviour {
     }
     private void GenerateItem()
     {
-        Vector2[] itemPos = new Vector2[GameController.instanse.conteiner.currentItem];
+        Vector2[] itemPos = new Vector2[GameController.instanse.itemCount];
 
         for (int i = 0; i < itemPos.Length; i++)
         {
