@@ -27,7 +27,7 @@ public class RDFieldEditor : EditorWindow
 
     //JsonConvert.DeserializeObject<List<FieldContainer>>("");
 
-    private static FieldContainer _selectedField;
+    private static FieldContainer? _selectedField;
 
     Vector2 _scrollPosition;
 
@@ -154,7 +154,7 @@ public class RDFieldEditor : EditorWindow
         {
             var field = filteredData[i].Field;
 
-            var _fieldName = _selectedField != null && filteredData[i] == _selectedField
+            var _fieldName = _selectedField != null && filteredData[i].Equals(_selectedField)
                 ? String.Format("[{0}] {1}", field.Id, field.Name)
                 : String.Format("[{0}] {1}", field.Id, field.Name);
 
@@ -205,15 +205,14 @@ public class RDFieldEditor : EditorWindow
 
     private void DrawSelectedField()
     {
-
         if (_selectedField != null)
-            DrawField(_selectedField);
+            DrawField(_selectedField.Value);
     }
 
     private void DrawField(FieldContainer cont)
     {
 
-        DrawGeneralFieldProperties(_selectedField);
+        DrawGeneralFieldProperties(_selectedField.Value);
 
         _scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
         {
@@ -466,8 +465,8 @@ public class RDFieldEditor : EditorWindow
 
     public void LoadFieldButton()
     {
-        if(FileWriter.Read(path) != null)
-           _conts = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path));
+        if(FileWriter.Read(path, Application.dataPath) != null)
+           _conts = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path, Application.dataPath));
         _selectedField = null;
         DrawSelectedField();
     }

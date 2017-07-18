@@ -9,16 +9,11 @@ public class FieldGenerator : MonoBehaviour {
     public Transform plaierPrefab;
     public Transform exitPrefab;
 
-    [SerializeField]
-    public Vector2 size;
-
     public Unit unit;
     List<Cell> cells = new List<Cell>();
 
     // Use this for initialization
     void Start () {
-        size.y = 9;
-        size.x = 9;
         GenerateMap();
     }
 
@@ -27,7 +22,7 @@ public class FieldGenerator : MonoBehaviour {
 
     private void GenerateMap()
     {
-        GenerateCell();
+      //  GenerateCell();
         GenerateExit();
         GenerateMob();
         GeneratePlayer();
@@ -47,47 +42,6 @@ public class FieldGenerator : MonoBehaviour {
        // cells.Remove(cell);
         cell.SetExit();
         Transform exit = Instantiate(exitPrefab, cell.gameObject.transform.position, Quaternion.Euler(Vector3.right)) as Transform;
-    }
-
-    private void GenerateCell()
-    {
-        string holderName = "Generated Map";
-        if (transform.FindChild(holderName))
-        {
-            DestroyImmediate(transform.FindChild(holderName).gameObject);
-        }
-
-        Transform mapHolder = new GameObject(holderName).transform;
-        mapHolder.parent = transform;
-
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                Vector3 tilePosition = new Vector3(-size.x / 2 + .5f + x, -size.y / 2 + 0.5f + y, 0);
-                Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right)) as Transform;
-                newTile.localScale = Vector3.one * (1 - outlinePercent);
-                newTile.parent = mapHolder;
-                Cell cell = newTile.GetComponent<Cell>();
-                if (new Vector2(x, y) == Vector2.zero)
-                    cell.Init(x, y, null, 1);
-
-                else if (new Vector2(x, y) == new Vector2(0, size.y - 1))
-                    cell.Init(x, y, null, 2);
-
-                else if (new Vector2(x, y) == new Vector2(size.x - 1, 0))
-                    cell.Init(x, y, null, 3);
-
-                else if (new Vector2(x, y) == new Vector2(size.x - 1, size.y - 1))
-                    cell.Init(x, y, null, 4);
-
-                else
-                {
-                    cell.Init(x, y);
-                    cells.Add(cell);
-                }
-            }
-        }
     }
 
     private void GeneratePlayer()

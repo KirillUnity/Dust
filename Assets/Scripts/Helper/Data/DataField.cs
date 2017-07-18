@@ -4,9 +4,9 @@ public class DataField : DataObject
 {
     #region FieldSize
     [JsonProperty("height")]
-    public int Height { get; set; }
+    public int Height; //{ get; set; }
     [JsonProperty("width")]
-    public int Width { get; set; }
+    public int Width; //{ get; set; }
     #endregion
 
     #region Mobs

@@ -8,9 +8,9 @@ public static class FileWriter
 {
     #region Read
 
-    public static string Read(string fileName)
+    public static string Read(string fileName, string dataPath)
     {
-        string path = Path.Combine(Application.dataPath, fileName);
+        string path = Path.Combine(dataPath, fileName);
         FileInfo fileInfo = new FileInfo(path);
 
         Debug.Log(File.ReadAllText(path, Encoding.UTF8));

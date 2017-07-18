@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Data;
-using Newtonsoft.Json;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
@@ -17,7 +16,7 @@ public class GameController : MonoBehaviour {
     private Text lifeCount;
 
     private List<Unit> units = new List<Unit>();
-    private List<Cell> AllCells = new List<Cell>();
+    private List<Cell> allCells = new List<Cell>();
 
     [SerializeField]
     private long level = 1;
@@ -27,27 +26,26 @@ public class GameController : MonoBehaviour {
 
     public bool playerCanGo = true;
     public FieldContainer conteiner;
-    private String path = "Resources/Json/level.json";
 
-    void Awake () {
+    public GameController(FieldContainer _conteiner)
+    {
         instanse = this;
-        //var fields = JsonConvert.DeserializeObject<List<FieldContainer>>(FileWriter.Read(path));
-        //conteiner = fields.Find(m => m.Field.Id == level);
 
-        //itemCount = conteiner.currentItem;
-        //unitCount = conteiner.currentItem;
+        conteiner = _conteiner;
 
-        dragDistance = Screen.height * 20 / 100; //10% высоты экрана
+        itemCount = conteiner.currentItem;
+        unitCount = conteiner.currentItem;
+        dragDistance = Screen.height * 20 / 100; //20% высоты экрана
     }
 
     public void AddCells(Cell  cell)
     {
-        AllCells.Add(cell);
+        allCells.Add(cell);
     }
 
     public List<Cell> GetCells()
     {
-       return AllCells;
+       return allCells;
     }
 
     public void AddUnits(Unit[] units)

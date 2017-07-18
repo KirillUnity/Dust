@@ -1,18 +1,20 @@
 ﻿namespace Data
 {
-    public class FieldContainer
+    public struct FieldContainer
     {
+        public bool Saved;
 
-        public bool Saved { get; set; }
+        public int currentMob;
 
-        public int currentMob { get; set; }
+        public int currentItem;
 
-        public int currentItem { get; set; }
-
-        public DataField Field { get; set; }
+        public DataField Field;
 
         public FieldContainer(DataField field)
         {
+            Saved = true;
+            currentMob = 1;
+            currentItem = 1;
             Field = field;
         }
     }
