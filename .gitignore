@@ -1,2 +1,27 @@
 Library/
 Temp/
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp.csproj
+Assets/JsonDotNet.meta
+Assets/JsonDotNet/Extras.meta
+Assets/JsonDotNet/Extras/CustomConverters.meta
+Assets/JsonDotNet/Source.meta
+Assets/JsonDotNet/Source/Aot.meta
+Assets/JsonDotNet/Source/Bson.meta
+Assets/JsonDotNet/Source/Converters.meta
+Assets/JsonDotNet/Source/Linq.meta
+Assets/JsonDotNet/Source/ObservableSupport.meta
+Assets/JsonDotNet/Source/Schema.meta
+Assets/JsonDotNet/Source/Serialization.meta
+Assets/JsonDotNet/Source/Shims.meta
+Assets/JsonDotNet/Source/Shims/WP8.meta
+Assets/JsonDotNet/Source/Utilities.meta
+Assets/JsonDotNet/Source/WinRT.meta
+Assets/JsonDotNet/Source/WinRT/Bson.meta
+Assets/JsonDotNet/Source/WinRT/Converters.meta
+Assets/JsonDotNet/Source/WinRT/Linq.meta
+Assets/JsonDotNet/Source/WinRT/Schema.meta
+Assets/JsonDotNet/Source/WinRT/Serialization.meta
+Assets/JsonDotNet/Source/WinRT/Utilities.meta
+Assets/Resources/Flor/New Folder.meta
+Test Task.sln
